@@ -7,7 +7,7 @@ dotenv.config()
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds]})
 
-loadEvents
+loadEvents(client)
 
 try {
     client.login(process.env.DISCORD_TOKEN)
