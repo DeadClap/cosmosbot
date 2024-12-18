@@ -9,3 +9,5 @@ const readyEvent: Event = {
         console.log(`Logged in as: ${client.user?.tag} (Version: ${version} on branch: ${getGitBranch()})`)
     }
 }
+
+export default readyEvent;
