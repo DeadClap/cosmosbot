@@ -1,15 +1,13 @@
 import { Client, GatewayIntentBits } from "discord.js";
 import dotenv from 'dotenv';
-import { version } from '../package.json'
-import getGitBranch from "./utils/gitBranch";
+import { loadEvents } from "./loadEvents";
+
 
 dotenv.config()
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds]})
 
-client.once('ready', () => {
-    console.log(`Logged in as: ${client.user?.tag} (Version: ${version} on branch: ${getGitBranch()})`)
-})
+loadEvents(client)
 
 try {
     client.login(process.env.DISCORD_TOKEN)
