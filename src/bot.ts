@@ -9,16 +9,6 @@ dotenv.config()
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds]});
 
-
-logger.info("test");
-logger.warn("warn");
-logger.error("test");
-
-
-
-
-
-
 (async () => {
     const commands = await loadCommands();
     setCommands(commands);
