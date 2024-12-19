@@ -1,6 +1,7 @@
 import { Event } from "./index";
 import { ChatInputApplicationCommandData, ChatInputCommandInteraction, Interaction } from 'discord.js'
 import { Command } from "../commands";
+import logger from "../logger";
 
 let commands: Command[] = []
 
@@ -19,7 +20,7 @@ const commandHandler: Event = {
         try {
             await command.execute(interaction as ChatInputCommandInteraction)
         } catch (error) {
-            console.error(`Error ececuting command: "${interaction.commandName}`, error)
+            logger.warn(`Error executing command: "${interaction.commandName}`, error)
             await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });        }
     }
 }

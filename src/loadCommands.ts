@@ -3,6 +3,7 @@ import path from "path";
 import { REST, Routes } from 'discord.js';
 import { Command } from './commands'
 import dotenv from 'dotenv';
+import logger from "./logger";
 
 dotenv.config()
 
@@ -21,15 +22,15 @@ export async function loadCommands() {
     const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN || "");
 
     try {
-        console.log(`Refreshing application (/) commands...`)
+        logger.warn(`Refreshing application (/) commands...`)
 
         const body = commands.map(cmd => cmd.data.toJSON());
         await rest.put(Routes.applicationCommands(process.env.CLIENT_ID || ""),{
             body
         })
-        console.log('Successfully reloaded application (/) commands!')
+        logger.info('Successfully reloaded application (/) commands!')
     } catch (error) {
-        console.error('Error refreshing application (/) commands:',error)
+        logger.error('Error refreshing application (/) commands:',error)
     }
 
     return commands
