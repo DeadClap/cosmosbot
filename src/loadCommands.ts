@@ -16,7 +16,9 @@ export async function loadCommands() {
         const command = require(path.join(commandsPath, file)).default;
         if (command && command.data) {
             commands.push(command)
+            logger.info(`Loaded Command: ${command.data.name}`)
         }
+        
     }
 
     const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN || "");
