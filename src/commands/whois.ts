@@ -11,7 +11,7 @@ const whoIsCommand: Command = {
         .setDescription('User to target')
         .setName('target')
         .setRequired(false)
-    ) as SlashCommandBuilder,
+    ),
   execute: userInfoCommand.execute,
 };
 

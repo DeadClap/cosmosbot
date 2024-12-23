@@ -11,7 +11,7 @@ const userInfoCommand: Command = {
         .setDescription('User to target')
         .setName('target')
         .setRequired(false)
-    ) as SlashCommandBuilder,
+    ),
   async execute(interaction) {
     // Assert that interaction is a ChatInputCommandInteraction
     const chatInputInteraction = interaction as ChatInputCommandInteraction;

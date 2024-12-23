@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from 'discord.js';
+import { ChatInputCommandInteraction, SlashCommandBuilder } from 'discord.js';
 import { Command } from './index';
 
 const EchoCommand: Command = {
@@ -10,8 +10,9 @@ const EchoCommand: Command = {
         .setName('message')
         .setDescription('The message to echo.')
         .setRequired(true)
-    ) as SlashCommandBuilder,
+    ),
   async execute(interaction) {
+    interaction = interaction as ChatInputCommandInteraction;
     const message = interaction.options.getString('message', true);
     await interaction.reply(`You said: ${message}.`);
   },
