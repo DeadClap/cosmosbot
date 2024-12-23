@@ -1,5 +1,5 @@
 import { Event } from "./index";
-import { ChatInputApplicationCommandData, ChatInputCommandInteraction, Interaction } from 'discord.js'
+import { ChatInputApplicationCommandData, ChatInputCommandInteraction, Colors, EmbedBuilder, Interaction } from 'discord.js'
 import { Command } from "../commands";
 import logger from "../logger";
 
@@ -20,8 +20,21 @@ const commandHandler: Event = {
         try {
             await command.execute(interaction as ChatInputCommandInteraction)
         } catch (error) {
-            logger.warn(`Error executing command: "${interaction.commandName}`, error)
-            await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });        }
+            const locDate = new Date()
+            const locator = `${interaction.commandName}-${locDate.getMonth()}${locDate.getDate()}${locDate.getFullYear()}${locDate.getHours()}${locDate.getMinutes()}${locDate.getSeconds()}`
+            logger.warn(`#${locator} Error executing command: "${interaction.commandName}"`, error)
+            // logger.warn(interaction.toJSON())
+            await interaction.reply({ embeds: [new EmbedBuilder()
+                .setAuthor({
+                name: interaction.client.user.username,
+                iconURL: interaction.client.user.displayAvatarURL(),
+            })
+            .setColor(Colors.Red)
+            .setTitle(`There was an error executing the command.`)
+            .setDescription(`This has been logged to the console, please ask the owner to investigate. Please give them this locator number to assist in finding the error.`)
+            .addFields(
+                {name: `Locator Number:`, value: `#${locator}`}
+            )], ephemeral: true });        }
     }
 }
 
