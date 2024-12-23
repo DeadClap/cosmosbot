@@ -1,4 +1,9 @@
-import { SlashCommandBuilder, EmbedBuilder, Colors, ChatInputCommandInteraction } from 'discord.js';
+import {
+  SlashCommandBuilder,
+  EmbedBuilder,
+  Colors,
+  ChatInputCommandInteraction,
+} from 'discord.js';
 import { Command } from './index';
 import timeSince from '../utils/timeSince';
 
