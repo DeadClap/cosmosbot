@@ -16,18 +16,31 @@ const serverInfoCommand: Command = {
       });
       return;
     }
-    const guildCreatedAt = guild.createdAt
+    const guildCreatedAt = guild.createdAt;
     const serverInfoEmbed = new EmbedBuilder()
       .setTitle(`${guild.name} (${guild.id})`) // Guild name will always be defined
       .setColor(Colors.Blurple)
-      .setThumbnail(guild.iconURL({
-        size: 512
-      }))
+      .setThumbnail(
+        guild.iconURL({
+          size: 512,
+        })
+      )
       .addFields(
-        { name: 'Guild Owner', value: `${guild.members.cache.get(guild.ownerId)?.displayName} (${guild.ownerId})`, inline: true },
-        { name: 'Members', value: `${guild.memberCount}`, inline: true},
-        { name: 'Boost Level', value: `${guild.premiumTier} (${guild.premiumSubscriptionCount} boosts)`, inline: true},
-        { name: "Guild Created", value: `${guildCreatedAt.getMonth()}/${guildCreatedAt.getDate()}/${guildCreatedAt.getFullYear()} ${guildCreatedAt.getHours()}:${guildCreatedAt.getMinutes()}:${guildCreatedAt.getSeconds()} (${timeSince(guildCreatedAt)})`}
+        {
+          name: 'Guild Owner',
+          value: `${guild.members.cache.get(guild.ownerId)?.displayName} (${guild.ownerId})`,
+          inline: true,
+        },
+        { name: 'Members', value: `${guild.memberCount}`, inline: true },
+        {
+          name: 'Boost Level',
+          value: `${guild.premiumTier} (${guild.premiumSubscriptionCount} boosts)`,
+          inline: true,
+        },
+        {
+          name: 'Guild Created',
+          value: `${guildCreatedAt.getMonth()}/${guildCreatedAt.getDate()}/${guildCreatedAt.getFullYear()} ${guildCreatedAt.getHours()}:${guildCreatedAt.getMinutes()}:${guildCreatedAt.getSeconds()} (${timeSince(guildCreatedAt)})`,
+        }
       );
 
     await interaction.reply({

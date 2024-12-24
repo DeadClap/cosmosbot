@@ -7,7 +7,9 @@ import logger from './logger';
 
 export async function loadCommands(): Promise<Command[]> {
   const commandsPath = path.join(__dirname, 'commands');
-  const commandFiles = readdirSync(commandsPath).filter(file => file.endsWith('.ts'));
+  const commandFiles = readdirSync(commandsPath).filter((file) =>
+    file.endsWith('.ts')
+  );
 
   const commands: Command[] = [];
   const globalCommands: Command[] = [];
@@ -49,10 +51,9 @@ export async function loadCommands(): Promise<Command[]> {
   try {
     // Register global commands
     logger.warn('Refreshing global application (/) commands...');
-    await rest.put(
-      Routes.applicationCommands(process.env.CLIENT_ID!),
-      { body: globalCommands.map(cmd => cmd.data.toJSON()) }
-    );
+    await rest.put(Routes.applicationCommands(process.env.CLIENT_ID!), {
+      body: globalCommands.map((cmd) => cmd.data.toJSON()),
+    });
     logger.info('Successfully reloaded global application (/) commands.');
 
     // Register guild-specific commands
@@ -60,9 +61,11 @@ export async function loadCommands(): Promise<Command[]> {
       logger.warn(`Refreshing guild-specific commands for guild ${guildId}...`);
       await rest.put(
         Routes.applicationGuildCommands(process.env.CLIENT_ID!, guildId),
-        { body: commands.map(cmd => cmd.data.toJSON()) } // Send all commands for the guild at once
+        { body: commands.map((cmd) => cmd.data.toJSON()) } // Send all commands for the guild at once
       );
-      logger.info(`Successfully reloaded guild-specific commands for guild ${guildId}.`);
+      logger.info(
+        `Successfully reloaded guild-specific commands for guild ${guildId}.`
+      );
     }
   } catch (error) {
     console.error('Error refreshing commands:', error);
