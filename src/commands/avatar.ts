@@ -40,7 +40,7 @@ const avatarCommand: Command = {
 
     await interaction.reply({
       embeds: [avatarEmbed],
-      ephemeral: true
+      ephemeral: true,
     });
   },
 };

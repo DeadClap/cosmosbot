@@ -1,42 +1,82 @@
+import { REST, Routes } from 'discord.js';
 import { readdirSync } from 'fs';
 import path from 'path';
-import { REST, Routes } from 'discord.js';
 import { Command } from './commands';
-import dotenv from 'dotenv';
+import { GuildResolvable } from 'discord.js';
 import logger from './logger';
 
-dotenv.config();
-
-export async function loadCommands() {
+export async function loadCommands(): Promise<Command[]> {
   const commandsPath = path.join(__dirname, 'commands');
-  const commandFiles = readdirSync(commandsPath).filter(
-    (file) => file.endsWith('.ts') || file.endsWith('.js')
-  );
+  const commandFiles = readdirSync(commandsPath).filter(file => file.endsWith('.ts'));
 
   const commands: Command[] = [];
+  const globalCommands: Command[] = [];
+  const guildCommands: Map<string, Command[]> = new Map();
+
   for (const file of commandFiles) {
-    const command = require(path.join(commandsPath, file)).default;
-    if (command && command.data) {
+    try {
+      const command = require(`${commandsPath}/${file}`).default as Command;
+
+      // Validate command structure
+      if (!command || !command.data || !command.execute) {
+        logger.warn(`Skipped invalid command file: ${file}`);
+        continue;
+      }
+
       commands.push(command);
-      logger.info(`Loaded Command: ${command.data.name}`);
+
+      if (command.guilds) {
+        const guildIds = Array.isArray(command.guilds)
+          ? command.guilds.map(resolveGuildId)
+          : [resolveGuildId(command.guilds)];
+
+        for (const guildId of guildIds) {
+          if (!guildCommands.has(guildId)) {
+            guildCommands.set(guildId, []);
+          }
+          guildCommands.get(guildId)!.push(command); // Add command to the guild's list
+        }
+      } else {
+        globalCommands.push(command);
+      }
+    } catch (error) {
+      console.error(`Error loading command file ${file}:`, error);
     }
   }
 
-  const rest = new REST({ version: '10' }).setToken(
-    process.env.DISCORD_TOKEN || ''
-  );
+  const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN!);
 
   try {
-    logger.warn(`Refreshing application (/) commands...`);
+    // Register global commands
+    logger.warn('Refreshing global application (/) commands...');
+    await rest.put(
+      Routes.applicationCommands(process.env.CLIENT_ID!),
+      { body: globalCommands.map(cmd => cmd.data.toJSON()) }
+    );
+    logger.info('Successfully reloaded global application (/) commands.');
 
-    const body = commands.map((cmd) => cmd.data.toJSON());
-    await rest.put(Routes.applicationCommands(process.env.CLIENT_ID || ''), {
-      body,
-    });
-    logger.info('Successfully reloaded application (/) commands!');
+    // Register guild-specific commands
+    for (const [guildId, commands] of guildCommands) {
+      logger.warn(`Refreshing guild-specific commands for guild ${guildId}...`);
+      await rest.put(
+        Routes.applicationGuildCommands(process.env.CLIENT_ID!, guildId),
+        { body: commands.map(cmd => cmd.data.toJSON()) } // Send all commands for the guild at once
+      );
+      logger.info(`Successfully reloaded guild-specific commands for guild ${guildId}.`);
+    }
   } catch (error) {
-    logger.error('Error refreshing application (/) commands:', error);
+    console.error('Error refreshing commands:', error);
   }
 
-  return commands;
+  return commands; // Return all commands (global and guild-specific)
+}
+
+// Helper function to resolve GuildResolvable to a string (guild ID)
+function resolveGuildId(guild: GuildResolvable): string {
+  if (typeof guild === 'string') {
+    return guild; // Already a guild ID
+  } else if ('id' in guild) {
+    return guild.id; // Resolve Guild object to ID
+  }
+  throw new Error('Invalid GuildResolvable provided');
 }
