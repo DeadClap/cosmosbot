@@ -61,7 +61,13 @@ The full list of commands is available [here](docs/COMMANDS.md).
 ### Environment Variables
 
 - `DISCORD_TOKEN`: Your bot's token from the Discord Developer Portal.
-- `GUILDS`: Comma-separated list of guild IDs for testing slash commands.
+- `CLIENT_ID`: Your bot's client id.
+- `DB_NAME`: Your Database's name.
+- `DB_USER`: The user that will access the database.
+- `DB_PASSWORD`: The secure password to access the database.
+- `DB_HOST`: The host of the database.
+- `DB_PORT`: The port the host is running on.
+- `DB_DIALECT`: The type of SQL Server you're running
 
 ### Logger
 
