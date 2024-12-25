@@ -5,7 +5,6 @@ import {
   TeamMemberRole,
 } from 'discord.js';
 import { Command } from './index';
-import logger from '../logger';
 
 const restrictedTerms = ['client.token'];
 
