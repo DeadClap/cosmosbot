@@ -9,7 +9,10 @@
     "dev": "npx ts-node src/bot.ts",
     "start": "node dist/bot.js",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "preversion": "npm run lint",
+    "version": "git add .",
+    "postversion": "git push && git push --tags"
   },
   "keywords": [],
   "author": "Christopher Welch",
