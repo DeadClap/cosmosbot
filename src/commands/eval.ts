@@ -73,7 +73,7 @@ const evalCommand: Command = {
     // Check for restricted terms
     if (restrictedTerms.some((term) => code.includes(term))) {
       await interaction.reply({
-        content: `⚠️ Access to restricted properties like \`client.token\` is not allowed.`,
+        content: `⚠️ Access to restricted properties is not allowed.`,
         ephemeral: true,
       });
       return;
