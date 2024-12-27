@@ -38,6 +38,12 @@ CosmosBot is a feature-rich Discord bot built with Discord.js and TypeScript. Th
    ```env
    DISCORD_TOKEN=your-bot-token
    CLIENT_ID=your-app-client-id
+   DB_NAME=datebase-name
+   DB_USER=bot-user-name
+   DB_PASSWORD=securepassword
+   DB_HOST=localhost
+   DB_PORT=3306
+   DB_DIALECT=mariadb
    ```
 
 4. Compile the TypeScript code:
@@ -120,4 +126,3 @@ This project is licensed under the MIT License. See the `LICENSE` file for detai
 
 - [Discord.js](https://discord.js.org/) - Powerful Node.js library for interacting with the Discord API.
 - The awesome open-source community for contributing to bot development tools.
-
