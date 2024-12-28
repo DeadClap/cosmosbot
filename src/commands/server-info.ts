@@ -1,5 +1,5 @@
 import { SlashCommandBuilder, EmbedBuilder, Colors } from 'discord.js';
-import { Command } from './index';
+import { Command } from '../interfaces/Command';
 import timeSince from '../utils/timeSince';
 
 const serverInfoCommand: Command = {

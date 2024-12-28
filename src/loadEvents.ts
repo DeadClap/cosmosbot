@@ -1,7 +1,7 @@
 import { readdirSync } from 'fs';
 import path from 'path';
 import { Client } from 'discord.js';
-import { Event, registerEvents } from './events';
+import { Event, registerEvents } from './interfaces/Event';
 
 export function loadEvents(client: Client) {
   const eventsPath = path.join(__dirname, 'events');

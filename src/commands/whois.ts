@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from 'discord.js';
-import { Command } from './index';
+import { Command } from '../interfaces/Command';
 import userInfoCommand from './user-info';
 
 const whoIsCommand: Command = {

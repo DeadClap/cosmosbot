@@ -4,7 +4,7 @@ import {
   Team,
   TeamMemberRole,
 } from 'discord.js';
-import { Command } from './index';
+import { Command } from '../interfaces/Command';
 
 const restrictedTerms = ['client.token'];
 

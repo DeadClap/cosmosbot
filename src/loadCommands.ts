@@ -1,7 +1,7 @@
 import { REST, Routes } from 'discord.js';
 import { readdirSync } from 'fs';
 import path from 'path';
-import { Command } from './commands';
+import { Command } from './interfaces/Command';
 import { GuildResolvable } from 'discord.js';
 import logger from './logger';
 

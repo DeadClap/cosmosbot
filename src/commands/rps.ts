@@ -3,7 +3,7 @@ import {
   EmbedBuilder,
   ChatInputCommandInteraction,
 } from 'discord.js';
-import { Command } from './index';
+import { Command } from '../interfaces/Command';
 
 const choices = ['rock', 'paper', 'scissors'];
 

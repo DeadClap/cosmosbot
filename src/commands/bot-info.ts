@@ -1,5 +1,5 @@
 import { EmbedBuilder, SlashCommandBuilder } from 'discord.js';
-import { Command } from './index';
+import { Command } from '../interfaces/Command';
 import { version } from '../../package.json';
 import getGitBranch from '../utils/gitBranch';
 import convertMsToCompoundedTime from '../utils/convertMsToCompoundedTime';

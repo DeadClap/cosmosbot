@@ -4,7 +4,7 @@ import {
   SlashCommandBuilder,
   Colors,
 } from 'discord.js';
-import { Command } from './index';
+import { Command } from '../interfaces/Command';
 
 const avatarCommand: Command = {
   data: new SlashCommandBuilder()

@@ -4,7 +4,7 @@ import {
   Colors,
   ChatInputCommandInteraction,
 } from 'discord.js';
-import { Command } from './index';
+import { Command } from '../interfaces/Command';
 import timeSince from '../utils/timeSince';
 
 const userInfoCommand: Command = {

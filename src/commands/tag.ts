@@ -3,7 +3,7 @@ import {
   EmbedBuilder,
   SlashCommandBuilder,
 } from 'discord.js';
-import { Command } from './index';
+import { Command } from '../interfaces/Command';
 import Tag from '../models/Tag';
 
 const tagCommand: Command = {

@@ -1,11 +1,11 @@
-import { Event } from './index';
+import { Event } from '../interfaces/Event';
 import {
   ChatInputCommandInteraction,
   Colors,
   EmbedBuilder,
   Interaction,
 } from 'discord.js';
-import { Command } from '../commands';
+import { Command } from '../interfaces/Command';
 import logger from '../logger';
 
 let commands: Command[] = [];

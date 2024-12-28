@@ -1,4 +1,4 @@
-import { Event } from './index';
+import { Event } from '../interfaces/Event';
 import { version } from '../../package.json';
 import getGitBranch from '../utils/gitBranch';
 import logger from '../logger';
