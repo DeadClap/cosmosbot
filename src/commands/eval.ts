@@ -1,10 +1,6 @@
-import {
-  ChatInputCommandInteraction,
-  SlashCommandBuilder,
-  Team,
-  TeamMemberRole,
-} from 'discord.js';
+import { ChatInputCommandInteraction, SlashCommandBuilder } from 'discord.js';
 import { Command } from '../interfaces/Command';
+import { isAdmin } from '../utils/isAdmin';
 
 const restrictedTerms = ['client.token'];
 
@@ -25,46 +21,15 @@ const evalCommand: Command = {
   async execute(interaction) {
     interaction = interaction as ChatInputCommandInteraction;
 
-    // Fetch the application info
-    const application = await interaction.client.application?.fetch();
-
-    // Ensure the application is owned by a team
-    const owner = application?.owner;
-    if (!(owner instanceof Team)) {
-      // Single-user-owned bot, deny access for non-owner
-      if (owner?.id !== interaction.user.id) {
-        await interaction.reply({
-          content: '⚠️ This command is restricted to the bot owner.',
-          ephemeral: true,
-        });
-        return;
-      }
-    } else {
-      // Application is team-owned, check if the user is a team admin
-      const isAdmin = () => {
-        if (interaction.user.id === owner.ownerId) return true;
-        if (
-          owner.members.get(interaction.user.id) &&
-          owner.members.get(interaction.user.id)?.role === TeamMemberRole.Admin
-        )
-          return true;
-        if (
-          owner.members.get(interaction.user.id) &&
-          owner.members.get(interaction.user.id)?.role ===
-            TeamMemberRole.Developer
-        )
-          return true;
-        return false;
-      };
-
-      if (!isAdmin) {
-        await interaction.reply({
-          content:
-            '⚠️ You must be an admin of the application team to use this command.',
-          ephemeral: true,
-        });
-        return;
-      }
+    // Check if the user is an admin
+    const isUserAdmin = await isAdmin(interaction);
+    if (!isUserAdmin) {
+      await interaction.reply({
+        content:
+          '⚠️ You must be an admin of the application team to use this command.',
+        ephemeral: true,
+      });
+      return;
     }
 
     // Get the code from the interaction
