@@ -44,6 +44,8 @@ CosmosBot is a feature-rich Discord bot built with Discord.js and TypeScript. Th
    DB_HOST=localhost
    DB_PORT=3306
    DB_DIALECT=mariadb
+   CAT_API_KEY=your-cat-api-key
+   DOG_API_KEY=your-dog-api-key
    ```
 
 4. Compile the TypeScript code:
