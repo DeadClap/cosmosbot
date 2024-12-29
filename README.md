@@ -76,6 +76,8 @@ The full list of commands is available [here](docs/COMMANDS.md).
 - `DB_HOST`: The host of the database.
 - `DB_PORT`: The port the host is running on.
 - `DB_DIALECT`: The type of SQL Server you're running
+- `CAT_API_KEY`: Key for Cat API: [TheCatAPI](https://thecatapi.com/)
+- `DOG_API_KEY`: Key for Dog API: [TheDogAPI](https://www.thedogapi.com)
 
 ### Logger
 
