@@ -2,6 +2,7 @@ import { Event } from '../interfaces/Event';
 import { version } from '../../package.json';
 import getGitBranch from '../utils/gitBranch';
 import logger from '../logger';
+import { ActivityType } from 'discord.js';
 
 const readyEvent: Event<'ready'> = {
   name: 'ready',
@@ -11,6 +12,9 @@ const readyEvent: Event<'ready'> = {
       `Logged in as: ${client.user?.tag} (Version: ${version} on branch: ${getGitBranch()})`
     );
     logger.info(`Currently a member of ${client.guilds.cache.size} guilds.`);
+    client.user.setPresence({
+      activities: [{ name: 'The Stars', type: ActivityType.Watching }],
+    });
   },
 };
 
